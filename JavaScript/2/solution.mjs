@@ -2,10 +2,6 @@ import fs from "fs";
 
 // Task Part 1: What would your total score be if everything goes exactly according to your strategy guide ?
 
-const inputData = fs.readFileSync(new URL("./input.txt", import.meta.url), "utf8", (data) => {
-  return data;
-});
-
 // Notes:
 // A & X = ROCK -> 1 Point
 // B & Y = PAPER -> 2 Points
@@ -17,6 +13,43 @@ const inputData = fs.readFileSync(new URL("./input.txt", import.meta.url), "utf8
 // Lose: 0 Points
 // Draw: 3 Points
 
-// Array aus Match-Strings machen und per reducer auf Punkte runterbrechen, danach Punkte Array summieren.
+const inputData = fs.readFileSync(new URL("./input.txt", import.meta.url), "utf8", (data) => {
+  return data;
+});
 
-console.log(inputData.split("\n"));
+function getShapeScore(shape) {
+  switch (shape) {
+    case "A":
+    case "X":
+      return 1;
+    case "B":
+    case "Y":
+      return 2;
+    case "C":
+    case "Z":
+      return 3;
+    default:
+      throw new Error("invalid shape");
+  }
+}
+
+function getOutcomeScore(round) {
+  const request = getShapeScore(round[0]);
+  const response = getShapeScore(round[1]);
+
+  if ((request === 1 && response === 3) || (request === 2 && response === 1) || (request === 3 && response === 2)) {
+    return 6;
+  } else if (request === response) {
+    return 3;
+  } else {
+    return 0;
+  }
+}
+
+const games = inputData.split("\n");
+const rounds = games.map((game) => game.split(" "));
+
+const totalRoundScores = rounds.map((round) => getOutcomeScore(round) + getShapeScore(round[1]));
+const totalScore = totalRoundScores.reduce((a, b) => a + b, 0);
+
+console.log(totalScore);
