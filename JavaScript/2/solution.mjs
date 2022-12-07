@@ -1,6 +1,7 @@
 import fs from "fs";
 
 // Task Part 1: What would your total score be if everything goes exactly according to your strategy guide?
+// Task Part 2: Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?
 
 // Notes:
 // A & X = ROCK -> 1 Point
