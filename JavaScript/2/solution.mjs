@@ -57,6 +57,9 @@ function getOutcomeScore(round) {
   }
 }
 
+// Todo: FUnktion, die die rounds basierend auf das gewünschte Endergebnis transformiert und den response Wert entsprechend austauscht
+// Danach vorhandene Funktionen abfeuern
+
 const games = inputData.split("\n");
 const rounds = games.map((game) => game.split(" "));
 

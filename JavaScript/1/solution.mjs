@@ -10,7 +10,7 @@ const inputData = fs.readFileSync(new URL("./input.txt", import.meta.url), "utf8
 /**
  * Get the total sum of an array of numbers.
  * @param {number[] | string[]} numbers Array of numbers
- * @returns {number}
+ * @returns {number} number
  */
 function getTotalSum(numbers) {
   return numbers.reduce((accumulator, currentValue) => Number(accumulator) + Number(currentValue), 0);
@@ -19,7 +19,7 @@ function getTotalSum(numbers) {
 /**
  * Finds the highest/greatest number in an array of numbers.
  * @param {number[]} numbers
- * @returns {number}
+ * @returns {number} number
  */
 function getGreatestNumber(numbers) {
   return Math.max.apply(Math, numbers);
@@ -28,7 +28,7 @@ function getGreatestNumber(numbers) {
 /**
  * Sorts an array of numbers by descending order.
  * @param {number[]} numbers
- * @returns {number[]}
+ * @returns {number[]} number[]
  */
 function sortDescending(numbers) {
   return numbers.sort((a, b) => b - a);
