@@ -1,6 +1,6 @@
 import fs from "fs";
 
-// Task Part 1: What would your total score be if everything goes exactly according to your strategy guide ?
+// Task Part 1: What would your total score be if everything goes exactly according to your strategy guide?
 
 // Notes:
 // A & X = ROCK -> 1 Point
@@ -17,6 +17,11 @@ const inputData = fs.readFileSync(new URL("./input.txt", import.meta.url), "utf8
   return data;
 });
 
+/**
+ * Gets the correct score based on the given shape.
+ * @param {string} shape
+ * @returns {number} number
+ */
 function getShapeScore(shape) {
   switch (shape) {
     case "A":
@@ -33,11 +38,16 @@ function getShapeScore(shape) {
   }
 }
 
+/**
+ * Calculates the outcome score of a given round.
+ * @param {[string, string]} round
+ * @returns {number} number
+ */
 function getOutcomeScore(round) {
   const request = getShapeScore(round[0]);
   const response = getShapeScore(round[1]);
 
-  if ((request === 1 && response === 3) || (request === 2 && response === 1) || (request === 3 && response === 2)) {
+  if ((response === 1 && request === 3) || (response === 2 && request === 1) || (response === 3 && request === 2)) {
     return 6;
   } else if (request === response) {
     return 3;
@@ -52,4 +62,4 @@ const rounds = games.map((game) => game.split(" "));
 const totalRoundScores = rounds.map((round) => getOutcomeScore(round) + getShapeScore(round[1]));
 const totalScore = totalRoundScores.reduce((a, b) => a + b, 0);
 
-console.log(totalScore);
+console.log(`Part 1: If everything goes according to my strategy guide, my total score would be ${totalScore}.`);
