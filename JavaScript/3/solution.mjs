@@ -6,11 +6,49 @@ const inputData = fs.readFileSync(new URL("./input.txt", import.meta.url), "utf8
   return data;
 });
 
-// Array aus items pro Rucksack erstellen
-// Items in der Mitte aufteilen
-// Feststellen welche items in Hälfte 1 und 2 gleich sind
-// Priority der Items festellen
-// Priority Summe der gleichen Items errechnen
-// Priority Summe aller Items errechnen
+/**
+ * Generates the described PriorityMap.
+ * @returns {Map<string, number>} Map<string, number>
+ */
+function generatePriorityMap() {
+  const priorityMap = new Map();
+  const lowerCaseAlphabet = [..."abcdefghijklmnopqrstuvwxyz"];
+  lowerCaseAlphabet.forEach((char, index) => priorityMap.set(char, index + 1));
+  lowerCaseAlphabet.forEach((char, index) => priorityMap.set(char.toUpperCase(), index + 27));
+  return priorityMap;
+}
 
-console.log(inputData);
+/**
+ * Halves a string/items into even substrings.
+ * @param {string} items
+ * @returns {[string, string]} [string, string]
+ */
+function halveItems(items) {
+  const firstHalf = items.slice(0, Math.floor(items.length / 2));
+  const secondHalf = items.slice(Math.floor(items.length / 2, items.length));
+  return [firstHalf, secondHalf];
+}
+
+/**
+ * Finds a matching character/item in two given strings
+ * @param {[string, string]} items
+ * @returns {string} string
+ */
+function findMatchingItem(items) {
+  const matchingItem = [...items[0]].find((item) => items[1].match(new RegExp(item, "g")));
+
+  if (!matchingItem) {
+    throw new Error("No matching Item found");
+  } else {
+    return matchingItem;
+  }
+}
+
+const priorityMap = generatePriorityMap();
+
+const itemsPerRucksack = inputData.split("\n");
+const sortedItemsPerRucksack = itemsPerRucksack.map((items) => halveItems(items));
+const matchingItemPerRucksack = sortedItemsPerRucksack.map((items) => findMatchingItem(items));
+const sumOfAllMatchingItems = matchingItemPerRucksack.map((item) => priorityMap.get(item)).reduce((a, b) => a + b, 0);
+
+console.log(`Part 1: The sum of priorities of the matching items is ${sumOfAllMatchingItems}.`);
